@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pexeso_project/pages/difficulty_selector.dart';
 import 'package:pexeso_project/pages/home.dart';
+import 'package:pexeso_project/pages/scoreboard.dart';
 import 'package:pexeso_project/pages/settings.dart';
 
 void main() {
@@ -19,6 +21,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/homepage': (context) => const HomePage(),
         '/settings': (context) => const SettingsWindow(),
+        '/scoreboard': (context) => const ScoreboardPage(),
+        '/difficulty': (context) => const DifficultySelectorPage(),
       },
     );
   }

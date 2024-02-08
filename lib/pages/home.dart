@@ -22,89 +22,46 @@ class HomePage extends StatelessWidget {
             children: [
               // TODO add own icons
               ElevatedButton.icon(
-                onPressed: () {},
-                label: const Text("PLAY",
-                    style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white70)),
-                icon: const Icon(
-                  Icons.play_arrow_outlined,
-                  color: Colors.white70,
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).primaryColor.withAlpha(156)),
-                  iconSize: MaterialStateProperty.all(60),
-                  fixedSize: MaterialStateProperty.all(
-                    const Size(300, 125),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/difficulty');
+                  },
+                  label: Text("PLAY", style: btnTextStyle()),
+                  icon: const Icon(
+                    Icons.play_arrow_outlined,
+                    color: Colors.white70,
                   ),
-                ),
-              ),
+                  style: btnStyle(context)),
               const SizedBox(height: 20),
               ElevatedButton.icon(
-                onPressed: () {},
-                label: const Text("Scoreboard",
-                    style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white70)),
-                icon: const Icon(
-                  Icons.score_outlined,
-                  color: Colors.white70,
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).primaryColor.withAlpha(156)),
-                  iconSize: MaterialStateProperty.all(60),
-                  fixedSize: MaterialStateProperty.all(
-                    const Size(300, 125),
+                  onPressed: () {},
+                  label: Text("Scoreboard", style: btnTextStyle()),
+                  icon: const Icon(
+                    Icons.score_outlined,
+                    color: Colors.white70,
                   ),
-                ),
-              ),
+                  style: btnStyle(context)),
               const SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.pushNamed(context, '/settings');
                 },
-                label: const Text("Settings",
-                    style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white70)),
+                label: Text("Settings", style: btnTextStyle()),
                 icon: const Icon(
                   Icons.settings_outlined,
                   color: Colors.white70,
                 ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).primaryColor.withAlpha(156)),
-                  iconSize: MaterialStateProperty.all(60),
-                  fixedSize: MaterialStateProperty.all(
-                    const Size(300, 125),
-                  ),
-                ),
+                style: btnStyle(context),
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(
+                // Would say this is button to page what will be little troll
                 onPressed: () {},
-                label: const Text("Author",
-                    style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white70)),
+                label: Text("Author", style: btnTextStyle()),
                 icon: const Icon(
                   Icons.person_2_outlined,
                   color: Colors.white70,
                 ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).primaryColor.withAlpha(156)),
-                  iconSize: MaterialStateProperty.all(60),
-                  fixedSize: MaterialStateProperty.all(
-                    const Size(300, 125),
-                  ),
-                ),
+                style: btnStyle(context),
               ),
             ],
           ),
@@ -113,12 +70,32 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  AppBar appBar(BuildContext context) {
-    return AppBar(
-      title: const Text("Pexeso game"),
-      titleTextStyle: const TextStyle(color: Colors.white, fontSize: 25),
-      centerTitle: true,
-      backgroundColor: Theme.of(context).primaryColor,
+  TextStyle btnTextStyle() {
+    return const TextStyle(
+        fontSize: 35, fontWeight: FontWeight.bold, color: Colors.white70);
+  }
+
+  ButtonStyle btnStyle(BuildContext context) {
+    return ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(
+          Theme.of(context).primaryColor.withAlpha(156)),
+      iconSize: MaterialStateProperty.all(60),
+      fixedSize: MaterialStateProperty.all(
+        const Size(300, 125),
+      ),
     );
+  }
+
+  PreferredSize appBar(BuildContext context) {
+    return PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: AppBar(
+          title: const Text("Pexeso game"),
+          titleTextStyle: const TextStyle(
+              color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).primaryColor,
+          toolbarHeight: 80,
+        ));
   }
 }
