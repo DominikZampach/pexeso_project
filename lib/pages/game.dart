@@ -1,20 +1,13 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
 
-const List<Icon> iconsList = [
-  Icon(Icons.house),
-  Icon(Icons.toys),
-  Icon(Icons.alarm),
-  Icon(Icons.adf_scanner),
-  Icon(Icons.airplanemode_active),
-  Icon(Icons.photo_camera),
-  Icon(Icons.backpack),
-  Icon(Icons.iron),
-  Icon(Icons.discord),
-  Icon(Icons.bike_scooter),
-  Icon(Icons.flag),
-  Icon(Icons.headphones)
-]; // 12 ikon
+import 'package:pexeso_project/functions/game_func.dart';
+
+const double cardHeightEasy = 160;
+const double cardWidthEasy = 100;
+
+const PexesoIcon alreadyMatched =
+    PexesoIcon(currentIcon: Icons.zoom_out_sharp, iconSize: 80);
 
 class FullGame extends StatefulWidget {
   final int difficulty;
@@ -67,29 +60,172 @@ class GameBody extends StatefulWidget {
 }
 
 class _GameBodyState extends State<GameBody> {
-  Map<String, int>? createIconsMap(int? difficulty) {
-    var possibleIcons = List.from(iconsList);
-    possibleIcons.shuffle();
-    if (difficulty == 1) {
-      return {for (var item in possibleIcons.take(6)) item: 2};
-    } else if (difficulty == 2) {
-      return {for (var item in possibleIcons.take(8)) item: 2};
-    } else {
-      return {for (var item in possibleIcons) item: 2};
-    }
-  }
+  late List<PexesoIcon?>? pexesoItems = createRandomList(widget.difficulty);
+  late List<bool> isFrontSide = createBoolList(pexesoItems);
+  late bool alreadySelectedPiece = false;
+  late PexesoIcon? selectedPiece;
+  late bool isGameOver = false;
+  late int selectedPieceIndex;
+  late bool isWaiting = false;
 
   @override
   Widget build(BuildContext context) {
-    var mapItems = createIconsMap(widget.difficulty);
-
     if (widget.difficulty == 1) {
-      return Container();
+      if (isGameOver) {
+        return const Placeholder();
+      } else {
+        return Container(
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (int i = 0; i <= 3; i++)
+                    if (pexesoItems?[i] == alreadyMatched)
+                      const SizedBox(
+                        height: cardHeightEasy,
+                        width: cardWidthEasy,
+                      )
+                    else
+                      GestureDetector(
+                          onTap: () {
+                            onTapFlipCardFunc(i);
+                          },
+                          child: isFrontSide[i]
+                              ? const FrontSideCard()
+                              : BackSideCard(pexesoItems: pexesoItems, i: i))
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (int i = 4; i <= 7; i++)
+                    if (pexesoItems?[i] == alreadyMatched)
+                      const SizedBox(
+                        height: cardHeightEasy,
+                        width: cardWidthEasy,
+                      )
+                    else
+                      GestureDetector(
+                          onTap: () {
+                            onTapFlipCardFunc(i);
+                          },
+                          child: isFrontSide[i]
+                              ? const FrontSideCard()
+                              : BackSideCard(pexesoItems: pexesoItems, i: i))
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (int i = 8; i <= 11; i++)
+                    if (pexesoItems?[i] == alreadyMatched)
+                      const SizedBox(
+                        height: cardHeightEasy,
+                        width: cardWidthEasy,
+                      )
+                    else
+                      GestureDetector(
+                          onTap: () {
+                            onTapFlipCardFunc(i);
+                          },
+                          child: isFrontSide[i]
+                              ? const FrontSideCard()
+                              : BackSideCard(pexesoItems: pexesoItems, i: i))
+                ],
+              ),
+            ],
+          ),
+        );
+      }
     } else if (widget.difficulty == 2) {
       return Container();
     } else {
       return Container();
     }
+  }
+
+  void onTapFlipCardFunc(int i) {
+    if (isWaiting) {
+      return;
+    }
+    if (isFrontSide[i] == false) {
+      return; // Zjistí, jestli náhodou už není karta otočená
+    }
+
+    isFrontSide[i] = false;
+
+    if (!alreadySelectedPiece) {
+      selectedPieceIndex = i;
+      selectedPiece = pexesoItems?[i];
+      alreadySelectedPiece = true;
+    } else {
+      if (selectedPiece?.currentIcon == pexesoItems?[i]?.currentIcon) {
+        pexesoItems?[i] = alreadyMatched;
+        pexesoItems?[selectedPieceIndex] = alreadyMatched;
+
+        if (isEveryElementSame(pexesoItems, alreadyMatched)) {
+          isGameOver = true;
+        }
+      } else {
+        isWaiting = true;
+        Future.delayed(const Duration(milliseconds: 2500), () {
+          isFrontSide[i] = true;
+          isFrontSide[selectedPieceIndex] = true;
+          isWaiting = false;
+        });
+      }
+      alreadySelectedPiece = false;
+    }
+  }
+}
+
+class BackSideCard extends StatelessWidget {
+  const BackSideCard({
+    Key? key,
+    required this.pexesoItems,
+    required this.i,
+  }) : super(key: key);
+
+  final List<PexesoIcon?>? pexesoItems;
+  final int i;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(border: Border.all()),
+        child: SizedBox(
+          width: cardWidthEasy,
+          height: cardHeightEasy,
+          child: pexesoItems?[i],
+        ),
+      ),
+    );
+  }
+}
+
+class FrontSideCard extends StatelessWidget {
+  const FrontSideCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(border: Border.all()),
+        child: const SizedBox(
+          width: cardWidthEasy,
+          height: cardHeightEasy,
+          child: Icon(Icons.question_mark, size: 100),
+        ),
+      ),
+    );
   }
 }
 
