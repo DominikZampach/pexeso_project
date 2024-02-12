@@ -7,7 +7,7 @@ import 'package:scaled_app/scaled_app.dart';
 
 void main() {
   runAppScaled(const MyApp(), scaleFactor: ((deviceSize) {
-    const double widthOfDesign = 1080;
+    const double widthOfDesign = 412; // in dpi
     return deviceSize.width / widthOfDesign;
   }));
 }
