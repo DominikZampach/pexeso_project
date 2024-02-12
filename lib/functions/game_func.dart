@@ -130,3 +130,16 @@ List<bool> createBoolList(List<PexesoIcon?>? listIcons) {
   }
   return booleanList;
 }
+
+String convertLvlToWords(int lvl) {
+  switch (lvl) {
+    case 1:
+      return "Easy";
+    case 2:
+      return "Medium";
+    case 3:
+      return "Hard";
+    default:
+      return "None";
+  }
+}

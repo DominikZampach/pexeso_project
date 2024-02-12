@@ -3,9 +3,13 @@ import 'package:pexeso_project/pages/difficulty_selector.dart';
 import 'package:pexeso_project/pages/home.dart';
 import 'package:pexeso_project/pages/scoreboard.dart';
 import 'package:pexeso_project/pages/settings.dart';
+import 'package:scaled_app/scaled_app.dart';
 
 void main() {
-  runApp(const MyApp());
+  runAppScaled(const MyApp(), scaleFactor: ((deviceSize) {
+    const double widthOfDesign = 1080;
+    return deviceSize.width / widthOfDesign;
+  }));
 }
 
 class MyApp extends StatelessWidget {

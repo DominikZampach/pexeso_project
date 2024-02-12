@@ -5,9 +5,18 @@ import 'package:pexeso_project/functions/game_func.dart';
 
 const double cardHeightEasy = 160;
 const double cardWidthEasy = 100;
+const double cardIconSizeEasy = 100;
+const double paddingEasy = 8;
+
+const double cardHeightMedium = 160;
+const double cardWidthMedium = 85;
+const double cardIconSizeMedium = 80;
+const double paddingMedium = 6;
 
 const PexesoIcon alreadyMatched =
-    PexesoIcon(currentIcon: Icons.zoom_out_sharp, iconSize: 80);
+    PexesoIcon(currentIcon: Icons.zoom_out_sharp, iconSize: 0);
+
+late int attempts;
 
 class FullGame extends StatefulWidget {
   final int difficulty;
@@ -28,6 +37,7 @@ class _FullGameState extends State<FullGame> {
     timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       setState(() {});
     });
+    attempts = 0;
   }
 
   @override
@@ -74,77 +84,248 @@ class _GameBodyState extends State<GameBody> {
       if (isGameOver) {
         return const Placeholder();
       } else {
-        return Container(
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  for (int i = 0; i <= 3; i++)
-                    if (pexesoItems?[i] == alreadyMatched)
-                      const SizedBox(
-                        height: cardHeightEasy,
-                        width: cardWidthEasy,
-                      )
-                    else
-                      GestureDetector(
-                          onTap: () {
-                            onTapFlipCardFunc(i);
-                          },
-                          child: isFrontSide[i]
-                              ? const FrontSideCard()
-                              : BackSideCard(pexesoItems: pexesoItems, i: i))
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  for (int i = 4; i <= 7; i++)
-                    if (pexesoItems?[i] == alreadyMatched)
-                      const SizedBox(
-                        height: cardHeightEasy,
-                        width: cardWidthEasy,
-                      )
-                    else
-                      GestureDetector(
-                          onTap: () {
-                            onTapFlipCardFunc(i);
-                          },
-                          child: isFrontSide[i]
-                              ? const FrontSideCard()
-                              : BackSideCard(pexesoItems: pexesoItems, i: i))
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  for (int i = 8; i <= 11; i++)
-                    if (pexesoItems?[i] == alreadyMatched)
-                      const SizedBox(
-                        height: cardHeightEasy,
-                        width: cardWidthEasy,
-                      )
-                    else
-                      GestureDetector(
-                          onTap: () {
-                            onTapFlipCardFunc(i);
-                          },
-                          child: isFrontSide[i]
-                              ? const FrontSideCard()
-                              : BackSideCard(pexesoItems: pexesoItems, i: i))
-                ],
-              ),
-            ],
-          ),
-        );
+        return gameEasy();
       }
     } else if (widget.difficulty == 2) {
-      return Container();
+      if (isGameOver) {
+        return const Placeholder();
+      } else {
+        return gameMedium();
+      }
     } else {
       return Container();
     }
+  }
+
+  Container gameMedium() {
+    return Container(
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (int i = 0; i <= 3; i++)
+                  if (pexesoItems?[i] == alreadyMatched)
+                    const CardReplacement(
+                      padding: paddingMedium,
+                      height: cardHeightMedium,
+                      width: cardWidthMedium,
+                    )
+                  else
+                    GestureDetector(
+                        onTap: () {
+                          onTapFlipCardFunc(i);
+                        },
+                        child: isFrontSide[i]
+                            ? const FrontSideCard(
+                                padding: paddingMedium,
+                                height: cardHeightMedium,
+                                width: cardWidthMedium,
+                                iconSize: cardIconSizeMedium)
+                            : BackSideCard(
+                                pexesoItems: pexesoItems,
+                                i: i,
+                                padding: paddingMedium,
+                                width: cardWidthMedium,
+                                height: cardHeightMedium,
+                              ))
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (int i = 4; i <= 7; i++)
+                  if (pexesoItems?[i] == alreadyMatched)
+                    const CardReplacement(
+                      padding: paddingMedium,
+                      height: cardHeightMedium,
+                      width: cardWidthMedium,
+                    )
+                  else
+                    GestureDetector(
+                        onTap: () {
+                          onTapFlipCardFunc(i);
+                        },
+                        child: isFrontSide[i]
+                            ? const FrontSideCard(
+                                padding: paddingMedium,
+                                height: cardHeightMedium,
+                                width: cardWidthMedium,
+                                iconSize: cardIconSizeMedium)
+                            : BackSideCard(
+                                pexesoItems: pexesoItems,
+                                i: i,
+                                padding: paddingMedium,
+                                width: cardWidthMedium,
+                                height: cardHeightMedium,
+                              ))
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (int i = 8; i <= 11; i++)
+                  if (pexesoItems?[i] == alreadyMatched)
+                    const CardReplacement(
+                      padding: paddingMedium,
+                      height: cardHeightMedium,
+                      width: cardWidthMedium,
+                    )
+                  else
+                    GestureDetector(
+                        onTap: () {
+                          onTapFlipCardFunc(i);
+                        },
+                        child: isFrontSide[i]
+                            ? const FrontSideCard(
+                                padding: paddingMedium,
+                                height: cardHeightMedium,
+                                width: cardWidthMedium,
+                                iconSize: cardIconSizeMedium)
+                            : BackSideCard(
+                                pexesoItems: pexesoItems,
+                                i: i,
+                                padding: paddingMedium,
+                                width: cardWidthMedium,
+                                height: cardHeightMedium,
+                              ))
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (int i = 12; i <= 15; i++)
+                  if (pexesoItems?[i] == alreadyMatched)
+                    const CardReplacement(
+                      padding: paddingMedium,
+                      height: cardHeightMedium,
+                      width: cardWidthMedium,
+                    )
+                  else
+                    GestureDetector(
+                        onTap: () {
+                          onTapFlipCardFunc(i);
+                        },
+                        child: isFrontSide[i]
+                            ? const FrontSideCard(
+                                padding: paddingMedium,
+                                height: cardHeightMedium,
+                                width: cardWidthMedium,
+                                iconSize: cardIconSizeMedium)
+                            : BackSideCard(
+                                pexesoItems: pexesoItems,
+                                i: i,
+                                padding: paddingMedium,
+                                width: cardWidthMedium,
+                                height: cardHeightMedium,
+                              ))
+              ],
+            )
+          ],
+        ));
+  }
+
+  Container gameEasy() {
+    return Container(
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 0; i <= 3; i++)
+                if (pexesoItems?[i] == alreadyMatched)
+                  const CardReplacement(
+                    padding: paddingEasy,
+                    height: cardHeightEasy,
+                    width: cardWidthEasy,
+                  )
+                else
+                  GestureDetector(
+                      onTap: () {
+                        onTapFlipCardFunc(i);
+                      },
+                      child: isFrontSide[i]
+                          ? const FrontSideCard(
+                              padding: paddingEasy,
+                              height: cardHeightEasy,
+                              width: cardWidthEasy,
+                              iconSize: cardIconSizeEasy)
+                          : BackSideCard(
+                              pexesoItems: pexesoItems,
+                              i: i,
+                              padding: paddingEasy,
+                              width: cardWidthEasy,
+                              height: cardHeightEasy,
+                            ))
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 4; i <= 7; i++)
+                if (pexesoItems?[i] == alreadyMatched)
+                  const CardReplacement(
+                    padding: paddingEasy,
+                    height: cardHeightEasy,
+                    width: cardWidthEasy,
+                  )
+                else
+                  GestureDetector(
+                      onTap: () {
+                        onTapFlipCardFunc(i);
+                      },
+                      child: isFrontSide[i]
+                          ? const FrontSideCard(
+                              padding: paddingEasy,
+                              height: cardHeightEasy,
+                              width: cardWidthEasy,
+                              iconSize: cardIconSizeEasy)
+                          : BackSideCard(
+                              pexesoItems: pexesoItems,
+                              i: i,
+                              padding: paddingEasy,
+                              width: cardWidthEasy,
+                              height: cardHeightEasy,
+                            ))
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 8; i <= 11; i++)
+                if (pexesoItems?[i] == alreadyMatched)
+                  const CardReplacement(
+                    padding: paddingEasy,
+                    height: cardHeightEasy,
+                    width: cardWidthEasy,
+                  )
+                else
+                  GestureDetector(
+                      onTap: () {
+                        onTapFlipCardFunc(i);
+                      },
+                      child: isFrontSide[i]
+                          ? const FrontSideCard(
+                              padding: paddingEasy,
+                              height: cardHeightEasy,
+                              width: cardWidthEasy,
+                              iconSize: cardIconSizeEasy)
+                          : BackSideCard(
+                              pexesoItems: pexesoItems,
+                              i: i,
+                              padding: paddingEasy,
+                              width: cardWidthEasy,
+                              height: cardHeightEasy,
+                            ))
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   void onTapFlipCardFunc(int i) {
@@ -154,7 +335,6 @@ class _GameBodyState extends State<GameBody> {
     if (isFrontSide[i] == false) {
       return; // Zjistí, jestli náhodou už není karta otočená
     }
-
     isFrontSide[i] = false;
 
     if (!alreadySelectedPiece) {
@@ -163,22 +343,53 @@ class _GameBodyState extends State<GameBody> {
       alreadySelectedPiece = true;
     } else {
       if (selectedPiece?.currentIcon == pexesoItems?[i]?.currentIcon) {
-        pexesoItems?[i] = alreadyMatched;
-        pexesoItems?[selectedPieceIndex] = alreadyMatched;
-
-        if (isEveryElementSame(pexesoItems, alreadyMatched)) {
-          isGameOver = true;
-        }
+        isWaiting = true;
+        Future.delayed(const Duration(milliseconds: 750), () {
+          pexesoItems?[i] = alreadyMatched;
+          pexesoItems?[selectedPieceIndex] = alreadyMatched;
+          if (isEveryElementSame(pexesoItems, alreadyMatched)) {
+            isGameOver = true;
+          }
+          isWaiting = false;
+        });
       } else {
         isWaiting = true;
-        Future.delayed(const Duration(milliseconds: 2500), () {
+        Future.delayed(const Duration(milliseconds: 1500), () {
           isFrontSide[i] = true;
           isFrontSide[selectedPieceIndex] = true;
           isWaiting = false;
         });
       }
+      attempts++;
       alreadySelectedPiece = false;
     }
+  }
+}
+
+class CardReplacement extends StatelessWidget {
+  final double padding;
+  final double height;
+  final double width;
+  const CardReplacement(
+      {Key? key,
+      required this.padding,
+      required this.height,
+      required this.width})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(padding),
+      child: Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.transparent)),
+        child: SizedBox(
+          height: height,
+          width: width,
+        ),
+      ),
+    );
   }
 }
 
@@ -187,20 +398,26 @@ class BackSideCard extends StatelessWidget {
     Key? key,
     required this.pexesoItems,
     required this.i,
+    required this.padding,
+    required this.height,
+    required this.width,
   }) : super(key: key);
 
   final List<PexesoIcon?>? pexesoItems;
   final int i;
+  final double padding;
+  final double height;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(padding),
       child: Container(
         decoration: BoxDecoration(border: Border.all()),
         child: SizedBox(
-          width: cardWidthEasy,
-          height: cardHeightEasy,
+          width: width,
+          height: height,
           child: pexesoItems?[i],
         ),
       ),
@@ -209,20 +426,28 @@ class BackSideCard extends StatelessWidget {
 }
 
 class FrontSideCard extends StatelessWidget {
+  final double padding;
+  final double height;
+  final double width;
+  final double iconSize;
   const FrontSideCard({
-    super.key,
-  });
+    Key? key,
+    required this.padding,
+    required this.height,
+    required this.width,
+    required this.iconSize,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(padding),
       child: Container(
         decoration: BoxDecoration(border: Border.all()),
-        child: const SizedBox(
-          width: cardWidthEasy,
-          height: cardHeightEasy,
-          child: Icon(Icons.question_mark, size: 100),
+        child: SizedBox(
+          width: width,
+          height: height,
+          child: Icon(Icons.question_mark, size: iconSize),
         ),
       ),
     );
@@ -236,7 +461,7 @@ PreferredSize appBar(int lvl, BuildContext context, Stopwatch stopwatch) =>
           backgroundColor: Theme.of(context).primaryColor,
           centerTitle: true,
           title: Text(
-            "Level $lvl",
+            "Level: ${convertLvlToWords(lvl)}",
             style: const TextStyle(
                 fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
           ),
@@ -254,7 +479,7 @@ PreferredSize appBar(int lvl, BuildContext context, Stopwatch stopwatch) =>
                   style: appBarStatisticsStats(),
                 ),
                 Text(
-                  "Attempts: xx",
+                  "Attempts: $attempts",
                   style: appBarStatisticsStats(),
                 )
               ],
@@ -270,7 +495,7 @@ PreferredSize appBarStartDialog(
           backgroundColor: Theme.of(context).primaryColor,
           centerTitle: true,
           title: Text(
-            "Level $lvl",
+            "${convertLvlToWords(lvl)} level",
             style: const TextStyle(
                 fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
           ),
