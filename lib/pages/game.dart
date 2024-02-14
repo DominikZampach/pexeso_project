@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:pexeso_project/functions/game_func.dart';
+import 'package:pexeso_project/pages/game_over.dart';
 
 const double cardHeightEasy = 160;
 const double cardWidthEasy = 100;
@@ -21,8 +23,11 @@ late int attempts;
 class FullGame extends StatefulWidget {
   final int difficulty;
   final Stopwatch stopwatch;
-  const FullGame({Key? key, required this.difficulty, required this.stopwatch})
-      : super(key: key);
+  const FullGame({
+    Key? key,
+    required this.difficulty,
+    required this.stopwatch,
+  }) : super(key: key);
 
   @override
   State<FullGame> createState() => _FullGameState();
@@ -35,7 +40,9 @@ class _FullGameState extends State<FullGame> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
     attempts = 0;
   }
@@ -81,25 +88,19 @@ class _GameBodyState extends State<GameBody> {
   @override
   Widget build(BuildContext context) {
     if (widget.difficulty == 1) {
-      if (isGameOver) {
-        return const Placeholder();
-      } else {
-        return gameEasy();
-      }
+      // TODO Změnit barvu karet od pozadí
+      return gameEasy();
     } else if (widget.difficulty == 2) {
-      if (isGameOver) {
-        return const Placeholder();
-      } else {
-        return gameMedium();
-      }
+      return gameMedium();
     } else {
-      return Container();
+      return Container(); // TODO dodělat hard version
     }
   }
 
   Container gameMedium() {
     return Container(
         alignment: Alignment.center,
+        color: Theme.of(context).primaryColor.withOpacity(0.6),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -229,6 +230,7 @@ class _GameBodyState extends State<GameBody> {
 
   Container gameEasy() {
     return Container(
+      color: Theme.of(context).primaryColor.withOpacity(0.6),
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -329,6 +331,9 @@ class _GameBodyState extends State<GameBody> {
   }
 
   void onTapFlipCardFunc(int i) {
+    if (!mounted) {
+      return;
+    }
     if (isWaiting) {
       return;
     }
@@ -348,7 +353,11 @@ class _GameBodyState extends State<GameBody> {
           pexesoItems?[i] = alreadyMatched;
           pexesoItems?[selectedPieceIndex] = alreadyMatched;
           if (isEveryElementSame(pexesoItems, alreadyMatched)) {
-            isGameOver = true;
+            _FullGameState fullGameState =
+                context.findAncestorStateOfType<_FullGameState>()!;
+            sleep(const Duration(milliseconds: 10));
+            pushToGameOver();
+            fullGameState.dispose();
           }
           isWaiting = false;
         });
@@ -363,6 +372,19 @@ class _GameBodyState extends State<GameBody> {
       attempts++;
       alreadySelectedPiece = false;
     }
+  }
+
+  dynamic pushToGameOver() {
+    _FullGameState fullGameState =
+        context.findAncestorStateOfType<_FullGameState>()!;
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => GameOver(
+                difficulty: widget.difficulty,
+                timeInMiliseconds:
+                    fullGameState.widget.stopwatch.elapsedMilliseconds,
+                numberOfAttempts: attempts)));
   }
 }
 
@@ -495,7 +517,7 @@ PreferredSize appBarStartDialog(
           backgroundColor: Theme.of(context).primaryColor,
           centerTitle: true,
           title: Text(
-            "${convertLvlToWords(lvl)} level",
+            "Level: ${convertLvlToWords(lvl)}",
             style: const TextStyle(
                 fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
           ),
