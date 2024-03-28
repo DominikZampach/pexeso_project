@@ -21,7 +21,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: const HomePage(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.cyan),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.cyan, brightness: Brightness.light),
+      ),
       routes: {
         '/homepage': (context) => const HomePage(),
         '/settings': (context) => const SettingsWindow(),

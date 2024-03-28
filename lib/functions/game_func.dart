@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const double iconSizeEasy = 80;
 const double iconSizeMedium = 60;
 const double iconSizeHard = 30; // TODO Změnit tyto hodnoty podle potřeby
+
 const List<PexesoIcon> iconsList = [
   PexesoIcon(
     currentIcon: Icons.computer,

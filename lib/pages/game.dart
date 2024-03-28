@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:pexeso_project/functions/game_func.dart';
@@ -14,6 +13,11 @@ const double cardHeightMedium = 160;
 const double cardWidthMedium = 85;
 const double cardIconSizeMedium = 80;
 const double paddingMedium = 6;
+
+const double cardHeightHard = 105;
+const double cardWidthHard = 85;
+const double cardIconSizeHard = 70;
+const double paddingHard = 6;
 
 const PexesoIcon alreadyMatched =
     PexesoIcon(currentIcon: Icons.zoom_out_sharp, iconSize: 0);
@@ -34,37 +38,44 @@ class FullGame extends StatefulWidget {
 }
 
 class _FullGameState extends State<FullGame> {
-  late Timer timer;
+  late Timer? timer;
 
   @override
   void initState() {
-    super.initState();
     timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
-      if (mounted) {
+      if (context.mounted) {
         setState(() {});
       }
     });
     attempts = 0;
+    super.initState();
+  }
+
+  void dispose_timer() {
+    timer?.cancel();
   }
 
   @override
   void dispose() {
-    timer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      // Now the user cannot go back :D
-      canPop: false,
-      child: Scaffold(
-          appBar: appBar(widget.difficulty, context, widget.stopwatch),
-          // body: bodyGame(context, widget.difficulty)),
-          body: GameBody(
-            difficulty: widget.difficulty,
-          )),
-    );
+    if (!context.mounted) {
+      return Container();
+    } else {
+      return PopScope(
+        // Now the user cannot go back :D
+        canPop: false,
+        child: Scaffold(
+            appBar: appBar(widget.difficulty, context, widget.stopwatch),
+            // body: bodyGame(context, widget.difficulty)),
+            body: GameBody(
+              difficulty: widget.difficulty,
+            )),
+      );
+    }
   }
 }
 
@@ -93,8 +104,140 @@ class _GameBodyState extends State<GameBody> {
     } else if (widget.difficulty == 2) {
       return gameMedium();
     } else {
-      return Container(); // TODO dodělat hard version
+      return gameHard();
     }
+  }
+
+  Container gameHard() {
+    return Container(
+      alignment: Alignment.center,
+      color: Theme.of(context).primaryColor.withOpacity(0.6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 0; i <= 5; i++)
+                if (pexesoItems?[i] == alreadyMatched)
+                  const CardReplacement(
+                    padding: paddingHard,
+                    height: cardHeightHard,
+                    width: cardWidthHard,
+                  )
+                else
+                  GestureDetector(
+                      onTap: () {
+                        onTapFlipCardFunc(i);
+                      },
+                      child: isFrontSide[i]
+                          ? const FrontSideCard(
+                              padding: paddingHard,
+                              height: cardHeightHard,
+                              width: cardWidthHard,
+                              iconSize: cardIconSizeHard)
+                          : BackSideCard(
+                              pexesoItems: pexesoItems,
+                              i: i,
+                              padding: paddingHard,
+                              width: cardWidthHard,
+                              height: cardHeightHard,
+                            ))
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 6; i <= 11; i++)
+                if (pexesoItems?[i] == alreadyMatched)
+                  const CardReplacement(
+                    padding: paddingHard,
+                    height: cardHeightHard,
+                    width: cardWidthHard,
+                  )
+                else
+                  GestureDetector(
+                      onTap: () {
+                        onTapFlipCardFunc(i);
+                      },
+                      child: isFrontSide[i]
+                          ? const FrontSideCard(
+                              padding: paddingHard,
+                              height: cardHeightHard,
+                              width: cardWidthHard,
+                              iconSize: cardIconSizeHard)
+                          : BackSideCard(
+                              pexesoItems: pexesoItems,
+                              i: i,
+                              padding: paddingHard,
+                              width: cardWidthHard,
+                              height: cardHeightHard,
+                            ))
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 12; i <= 17; i++)
+                if (pexesoItems?[i] == alreadyMatched)
+                  const CardReplacement(
+                    padding: paddingHard,
+                    height: cardHeightHard,
+                    width: cardWidthHard,
+                  )
+                else
+                  GestureDetector(
+                      onTap: () {
+                        onTapFlipCardFunc(i);
+                      },
+                      child: isFrontSide[i]
+                          ? const FrontSideCard(
+                              padding: paddingHard,
+                              height: cardHeightHard,
+                              width: cardWidthHard,
+                              iconSize: cardIconSizeHard)
+                          : BackSideCard(
+                              pexesoItems: pexesoItems,
+                              i: i,
+                              padding: paddingHard,
+                              width: cardWidthHard,
+                              height: cardHeightHard,
+                            ))
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 18; i <= 23; i++)
+                if (pexesoItems?[i] == alreadyMatched)
+                  const CardReplacement(
+                    padding: paddingHard,
+                    height: cardHeightHard,
+                    width: cardWidthHard,
+                  )
+                else
+                  GestureDetector(
+                      onTap: () {
+                        onTapFlipCardFunc(i);
+                      },
+                      child: isFrontSide[i]
+                          ? const FrontSideCard(
+                              padding: paddingHard,
+                              height: cardHeightHard,
+                              width: cardWidthHard,
+                              iconSize: cardIconSizeHard)
+                          : BackSideCard(
+                              pexesoItems: pexesoItems,
+                              i: i,
+                              padding: paddingHard,
+                              width: cardWidthHard,
+                              height: cardHeightHard,
+                            ))
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Container gameMedium() {
@@ -355,9 +498,8 @@ class _GameBodyState extends State<GameBody> {
           if (isEveryElementSame(pexesoItems, alreadyMatched)) {
             _FullGameState fullGameState =
                 context.findAncestorStateOfType<_FullGameState>()!;
-            sleep(const Duration(milliseconds: 10));
-            pushToGameOver();
-            fullGameState.dispose();
+            fullGameState.dispose_timer();
+            pushToGameOver(fullGameState.widget.stopwatch.elapsedMilliseconds);
           }
           isWaiting = false;
         });
@@ -374,16 +516,13 @@ class _GameBodyState extends State<GameBody> {
     }
   }
 
-  dynamic pushToGameOver() {
-    _FullGameState fullGameState =
-        context.findAncestorStateOfType<_FullGameState>()!;
+  dynamic pushToGameOver(int elapsedMilliseconds) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => GameOver(
                 difficulty: widget.difficulty,
-                timeInMiliseconds:
-                    fullGameState.widget.stopwatch.elapsedMilliseconds,
+                timeInMiliseconds: elapsedMilliseconds,
                 numberOfAttempts: attempts)));
   }
 }
@@ -476,8 +615,12 @@ class FrontSideCard extends StatelessWidget {
   }
 }
 
-PreferredSize appBar(int lvl, BuildContext context, Stopwatch stopwatch) =>
-    PreferredSize(
+PreferredSize appBar(int lvl, BuildContext context, Stopwatch stopwatch) {
+  if (!context.mounted) {
+    return PreferredSize(
+        preferredSize: const Size.fromHeight(0), child: Container());
+  } else {
+    return PreferredSize(
         preferredSize: const Size.fromHeight(120),
         child: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -508,6 +651,8 @@ PreferredSize appBar(int lvl, BuildContext context, Stopwatch stopwatch) =>
             ),
           ),
         ));
+  }
+}
 
 PreferredSize appBarStartDialog(
         int lvl, BuildContext context, Stopwatch stopwatch) =>

@@ -26,7 +26,7 @@ class GameOver extends StatelessWidget {
 AppBar gameOverAppBar(int? difficulty, BuildContext context) {
   return AppBar(
     backgroundColor: Theme.of(context).primaryColor,
-    centerTitle: false,
+    centerTitle: true,
     title: Text(
       "${convertLvlToWords(difficulty!.toInt())} level completed!",
       style: const TextStyle(
