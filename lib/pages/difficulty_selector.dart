@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pexeso_project/pages/home.dart';
-
+import 'package:pexeso_project/pages/widgets/back_leading.dart';
 import 'start_dialog.dart';
 
 class DifficultySelectorPage extends StatelessWidget {
@@ -94,9 +94,10 @@ class DifficultySelectorPage extends StatelessWidget {
         child: AppBar(
           title: const Text('Difficulty selector'),
           titleTextStyle: const TextStyle(
-              color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+              color: Colors.white70, fontSize: 30, fontWeight: FontWeight.bold),
           centerTitle: true,
           backgroundColor: Theme.of(context).primaryColor,
+          leading: backLeading(context),
           toolbarHeight: 80,
         ));
   }

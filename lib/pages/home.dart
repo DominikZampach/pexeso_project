@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
 
   Container homepageBody(BuildContext context) {
     return Container(
-      color: Theme.of(context).primaryColor.withOpacity(0.6),
+      color: Theme.of(context).colorScheme.primary.withOpacity(.6),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(10.0),

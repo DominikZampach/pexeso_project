@@ -51,7 +51,7 @@ class _FullGameState extends State<FullGame> {
     super.initState();
   }
 
-  void dispose_timer() {
+  void disposeTimer() {
     timer?.cancel();
   }
 
@@ -498,7 +498,7 @@ class _GameBodyState extends State<GameBody> {
           if (isEveryElementSame(pexesoItems, alreadyMatched)) {
             _FullGameState fullGameState =
                 context.findAncestorStateOfType<_FullGameState>()!;
-            fullGameState.dispose_timer();
+            fullGameState.disposeTimer();
             pushToGameOver(fullGameState.widget.stopwatch.elapsedMilliseconds);
           }
           isWaiting = false;
@@ -575,7 +575,9 @@ class BackSideCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(padding),
       child: Container(
-        decoration: BoxDecoration(border: Border.all()),
+        decoration: BoxDecoration(
+            border: Border.all(),
+            color: Theme.of(context).colorScheme.secondary.withOpacity(0.7)),
         child: SizedBox(
           width: width,
           height: height,
@@ -604,7 +606,9 @@ class FrontSideCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(padding),
       child: Container(
-        decoration: BoxDecoration(border: Border.all()),
+        decoration: BoxDecoration(
+            border: Border.all(),
+            color: Theme.of(context).colorScheme.secondary.withOpacity(0.7)),
         child: SizedBox(
           width: width,
           height: height,
@@ -628,7 +632,9 @@ PreferredSize appBar(int lvl, BuildContext context, Stopwatch stopwatch) {
           title: Text(
             "Level: ${convertLvlToWords(lvl)}",
             style: const TextStyle(
-                fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.white70),
           ),
           toolbarHeight: 80,
           leading: Container(),
@@ -654,23 +660,7 @@ PreferredSize appBar(int lvl, BuildContext context, Stopwatch stopwatch) {
   }
 }
 
-PreferredSize appBarStartDialog(
-        int lvl, BuildContext context, Stopwatch stopwatch) =>
-    PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          centerTitle: true,
-          title: Text(
-            "Level: ${convertLvlToWords(lvl)}",
-            style: const TextStyle(
-                fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          toolbarHeight: 80,
-          leading: Container(),
-        ));
-
 TextStyle appBarStatisticsStats() {
   return const TextStyle(
-      color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold);
+      color: Colors.white70, fontSize: 24, fontWeight: FontWeight.bold);
 }

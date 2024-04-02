@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pexeso_project/functions/game_func.dart';
 import 'package:pexeso_project/pages/game.dart';
+import 'package:pexeso_project/pages/widgets/back_leading.dart';
 
 class StartDialog extends StatelessWidget {
   final int difficulty;
@@ -31,7 +33,10 @@ class StartDialog extends StatelessWidget {
                               stopwatch: stopwatch,
                             )));
               },
-              icon: const Icon(Icons.play_arrow_outlined),
+              icon: const Icon(
+                Icons.play_arrow_outlined,
+                color: Colors.white70,
+              ),
               iconSize: 50,
             ),
           ],
@@ -40,3 +45,21 @@ class StartDialog extends StatelessWidget {
     );
   }
 }
+
+PreferredSize appBarStartDialog(
+        int lvl, BuildContext context, Stopwatch stopwatch) =>
+    PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          centerTitle: true,
+          title: Text(
+            "Level: ${convertLvlToWords(lvl)}",
+            style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.white70),
+          ),
+          toolbarHeight: 80,
+          leading: backLeading(context),
+        ));

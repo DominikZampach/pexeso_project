@@ -115,14 +115,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
-  scaled_app:
-    dependency: "direct main"
-    description:
-      name: scaled_app
-      sha256: "3415fad16d1cf283112988985ccd14c4cd28bf48cbe6432d59e158f3b632d58d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -194,4 +186,3 @@ packages:
     version: "0.3.0"
 sdks:
   dart: ">=3.2.4 <4.0.0"
-  flutter: ">=3.16.0"
