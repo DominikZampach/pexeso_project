@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pexeso_project/functions/database.dart';
 import 'package:pexeso_project/functions/game_func.dart';
 import 'package:pexeso_project/pages/game.dart';
+import 'package:pexeso_project/pages/home.dart';
 
 class GameOver extends StatefulWidget {
   const GameOver(
@@ -74,6 +75,24 @@ Container gameOverBody(int difficulty, int timeInMiliseconds,
                 color: Colors.white70),
           ),
         ),
+        Padding(
+            padding: const EdgeInsets.only(top: 300.0),
+            child: ElevatedButton.icon(
+                label: const Text(
+                  "Home",
+                  style: TextStyle(fontSize: 32),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()));
+                },
+                icon: const Icon(
+                  Icons.home,
+                  size: 70,
+                  color: Colors.black,
+                )))
         // TODO tady bude Table s nejlepšími výsledky z SQLite databáze (bude se muset nechat vytvořit pokud ještě není vytvořená při prvním spuštění aplikace)
       ],
     ),
