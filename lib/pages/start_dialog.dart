@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pexeso_project/functions/game_func.dart';
 import 'package:pexeso_project/pages/game.dart';
-import 'package:pexeso_project/pages/widgets/back_leading.dart';
+import 'package:pexeso_project/widgets/back_leading.dart';
 
 class StartDialog extends StatelessWidget {
   final int difficulty;
@@ -35,7 +35,7 @@ class StartDialog extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.play_arrow_outlined,
-                color: Colors.white70,
+                color: Colors.white,
               ),
               iconSize: 50,
             ),
@@ -56,9 +56,7 @@ PreferredSize appBarStartDialog(
           title: Text(
             "Level: ${convertLvlToWords(lvl)}",
             style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.white70),
+                fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           toolbarHeight: 80,
           leading: backLeading(context),

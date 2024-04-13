@@ -10,7 +10,7 @@ SizedBox backLeading(BuildContext context) {
         },
         icon: const Icon(
           Icons.arrow_back_ios_new_rounded,
-          color: Colors.white70,
+          color: Colors.white,
         )),
   );
 }

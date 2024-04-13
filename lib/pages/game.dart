@@ -632,9 +632,7 @@ PreferredSize appBar(int lvl, BuildContext context, Stopwatch stopwatch) {
           title: Text(
             "Level: ${convertLvlToWords(lvl)}",
             style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.white70),
+                fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           toolbarHeight: 80,
           leading: Container(),
@@ -662,5 +660,5 @@ PreferredSize appBar(int lvl, BuildContext context, Stopwatch stopwatch) {
 
 TextStyle appBarStatisticsStats() {
   return const TextStyle(
-      color: Colors.white70, fontSize: 24, fontWeight: FontWeight.bold);
+      color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold);
 }

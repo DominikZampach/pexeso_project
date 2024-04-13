@@ -60,9 +60,7 @@ Container gameOverBody(int difficulty, int timeInMiliseconds,
           child: Text(
             "Number of attempts: $attempts",
             style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Colors.white70),
+                fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
         Padding(
@@ -70,33 +68,32 @@ Container gameOverBody(int difficulty, int timeInMiliseconds,
           child: Text(
             "Time: ${timeInMiliseconds / 1000} s",
             style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Colors.white70),
+                fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
-        Padding(
-            padding: const EdgeInsets.only(top: 300.0),
-            child: ElevatedButton.icon(
-                label: const Text(
-                  "Home",
-                  style: TextStyle(fontSize: 32),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomePage()));
-                },
-                icon: const Icon(
-                  Icons.home,
-                  size: 70,
-                  color: Colors.black,
-                )))
-        // TODO tady bude Table s nejlepšími výsledky z SQLite databáze (bude se muset nechat vytvořit pokud ještě není vytvořená při prvním spuštění aplikace)
+        homeReturnButton(context)
       ],
     ),
   );
+}
+
+Padding homeReturnButton(BuildContext context) {
+  return Padding(
+      padding: const EdgeInsets.only(top: 300.0),
+      child: ElevatedButton.icon(
+          label: const Text(
+            "Home",
+            style: TextStyle(fontSize: 32),
+          ),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const HomePage()));
+          },
+          icon: const Icon(
+            Icons.home,
+            size: 70,
+            color: Colors.black,
+          )));
 }
 
 AppBar gameOverAppBar(int? difficulty, BuildContext context) {
@@ -106,7 +103,7 @@ AppBar gameOverAppBar(int? difficulty, BuildContext context) {
     title: Text(
       "${convertLvlToWords(difficulty!.toInt())} level completed!",
       style: const TextStyle(
-          fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white70),
+          fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
     ),
     toolbarHeight: 80,
     leading: const SizedBox(height: 0, width: 0),

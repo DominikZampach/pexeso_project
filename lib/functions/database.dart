@@ -39,3 +39,14 @@ void saveToDatabase(int attempts, int difficulty, int timemilisecond) async {
     print("Inserted $id1");
   });
 }
+
+Future<List<Map>> getSpecificDifficultyRecords(int difficulty) async {
+  var databasesPath = await getDatabasesPath();
+  String dbPath = "$databasesPath/score.db";
+  Database database = await openDatabase(dbPath);
+  List<Map> records = await database.rawQuery(
+      "SELECT * FROM scores WHERE difficulty=$difficulty ORDER BY timemilisecond");
+  print(records);
+  // Output:  [{id: 1, attempts: 9, difficulty: 1, timemilisecond: 17488}, {id: 2, attempts: 10, difficulty: 1, timemilisecond: 18734}, {id: 3, attempts: 14, difficulty: 1, timemilisecond: 41583}, {id: 4, attempts: 9, difficulty: 1, timemilisecond: 25287}, {id: 5, attempts: 11, difficulty: 1, timemilisecond: 19152}]
+  return records;
+}

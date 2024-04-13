@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pexeso_project/pages/home.dart';
-import 'package:pexeso_project/pages/widgets/back_leading.dart';
+import 'package:pexeso_project/widgets/appbar_const.dart';
+import 'package:pexeso_project/widgets/back_leading.dart';
 import 'start_dialog.dart';
 
 class DifficultySelectorPage extends StatelessWidget {
@@ -35,7 +36,7 @@ class DifficultySelectorPage extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.looks_one_outlined,
-                      color: Colors.white70,
+                      color: Colors.white,
                     ),
                     style: const HomePage().btnStyle(context),
                     label: Text(
@@ -54,7 +55,7 @@ class DifficultySelectorPage extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.looks_two_outlined,
-                      color: Colors.white70,
+                      color: Colors.white,
                     ),
                     style: const HomePage().btnStyle(context),
                     label: Text(
@@ -73,7 +74,7 @@ class DifficultySelectorPage extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.looks_3_outlined,
-                      color: Colors.white70,
+                      color: Colors.white,
                     ),
                     style: const HomePage().btnStyle(context),
                     label: Text(
@@ -93,8 +94,7 @@ class DifficultySelectorPage extends StatelessWidget {
         preferredSize: const Size.fromHeight(80),
         child: AppBar(
           title: const Text('Difficulty selector'),
-          titleTextStyle: const TextStyle(
-              color: Colors.white70, fontSize: 30, fontWeight: FontWeight.bold),
+          titleTextStyle: appbarTitleStyle(),
           centerTitle: true,
           backgroundColor: Theme.of(context).primaryColor,
           leading: backLeading(context),
